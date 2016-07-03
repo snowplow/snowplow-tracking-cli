@@ -1,0 +1,27 @@
+language: go
+sudo: required
+go:
+  - 1.3
+  - 1.4
+  - 1.5
+  - 1.6
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get golang.org/x/tools/cmd/cover
+script:
+  - go test -v -covermode=count -coverprofile=coverage.out
+  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci
+before_deploy:
+  - sudo apt-get update
+  - sudo apt-get install -y autopoint binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 gcc-mingw-w64-i686 gcc-mingw-w64-x86-64
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: ./.travis/deploy.sh $TRAVIS_TAG
+  on:
+    condition: '"${TRAVIS_GO_VERSION}" == "1.6"' 
+    tags: true
+env:
+  global:
+  - secure: Q2gwDDWiQzrpjdg1pnQnES5qlUu58+jhhyKgR0Puz0uB5d/Mi//s8bn9q8G/vTzmqzlaBYYFqWjX6M1smMOOzbcrirDMpLzCY+c1uNFLiBHb2e/jg/H+Xg1stirKaX2zvccJu223Yj4qvcZZ8SgQ2DLP2ZpXRuKMPZarIiQzf1C/HkNbnelrPOkhqfW/11tVvkL1/WEVHa6NE6iQsUyKZDatU9w9pW2hiPXzvQT++H1OUImr8EDm040Y8IaZSaWFGBv9fOfcsrkoSD2uw6OswOOLbGzNikWL2C4Bz0/cs49rwPjNeyMU1TGTg6w5tcahIV7//s2Mwf59sg+by4z/u6j4LYWGlO0ER+CE8m5N/Ky/sc3yIdRginedrFdy12OuEpcT9tBD6YS9o42XnLHbQnvxlP8DFk9fnH2+Z63s3bL6E90qCXczn7ltrFntaqtKVdaK2NtsxTzj7DhIf0Ofy0hOWrrgm+bXwoPxGU0dr69mRZ3xNpCS5WE2HSWPrC1hZPAirK7NkIFqviHv8DcN432SKZTiaT+rBhxKxkIi9nak+YppOGTK4xp3qNRInZpGEIB3f4MMneAnKH5DlfkI/gayil1xrzLqZ9v9aSZB1bqocdoYE/YnDmdOS/yuei8cU4FJgXKS5lejdpl4Qtc27ku4Q4/tI1AD/3Nb5uTCvLs=
+  - secure: B7RC23EM2F5RPShbR7e37k6ZACPfUHUlkj8yIjGKsVJ2vTHvZ0N6YyVtjbK49Wv3Y37FSdlJt9cddLltlKFEzJxac5O7tU+Gyg3SuH0PpfJ4pCvU1nH6MWR+arcTB43sXB6WbTzTv+X/UE9BSQMDLR5wKH2Byx3Fq+ilnGB0i/123Bw3d9fBmmZOrel9xK9gJY0y542IIbyIOTTFBMb+iZGNY1dmtUw+p+t6TlaHQ7jX/RBL9SsdVG0fNhd1Xw7mPTbs3XPs1o+NFj8a5X0NneyFbB8nEo/skxUFrjxmj1z4PvIfwpuT+54o5UqKJSzpYBzfjNQYoItGX83DlaYY45mu3yClffdnp7lIZbS6e0QE5X3KpvwFLSMnoTC+nKanTzEBsEKPbD9j1ZoFkvzGwATRUoYC5kCf64OfU10yc7eSDt4PSGiM01PqzSSPYWuTCKC1fJBvSTnUk9hV3F8IoOzFsbDiSPHsZGW0q6ONfR47Q0HsYQr+vgE5Bbq7eYJkQ9i5CGdA1PaKP4L9WsVvOml62jkcYhwQv+Rr34TvI/fejvXBB5JadHjrOpB+FnjudKuJVDMiSKYL8NCtbQaHNnjHkXdV0GeEjmAl8em/6vhb1UorC8KR3heXoHX8gV5unDFPc/fHqLIPZBnrBBu3m0o8s0tYsAvxI/Oxi6jZQnE=
