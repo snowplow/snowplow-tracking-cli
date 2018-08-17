@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016 Snowplow Analytics Ltd. All rights reserved.
+// Copyright (c) 2016-2018 Snowplow Analytics Ltd. All rights reserved.
 //
 // This program is licensed to you under the Apache License Version 2.0,
 // and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -26,7 +26,7 @@ const (
   APP_VERSION = "0.1.0"
   APP_NAME  = "snowplowtrk"
   APP_USAGE = "Snowplow Analytics Tracking CLI"
-  APP_COPYRIGHT = "(c) 2016 Snowplow Analytics, LTD"
+  APP_COPYRIGHT = "(c) 2016-2018 Snowplow Analytics, LTD"
 )
 
 type SelfDescJson struct {
