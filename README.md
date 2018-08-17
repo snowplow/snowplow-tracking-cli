@@ -1,4 +1,4 @@
-[![Build Status][travis-image]][travis] [![Coveralls][coveralls-image]][coveralls] [![Release][release-image]][releases] [![License][license-image]][license]
+[![Build Status][travis-image]][travis] [![Coveralls][coveralls-image]][coveralls] [![Goreport][goreport-image]][goreport] [![Release][release-image]][releases] [![License][license-image]][license]
 
 ## Overview
 
@@ -103,6 +103,9 @@ limitations under the License.
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
 [license]: http://www.apache.org/licenses/LICENSE-2.0
+
+[goreport-image]: https://goreportcard.com/badge/github.com/snowplow/snowplow-tracking-cli
+[goreport]: https://goreportcard.com/report/github.com/snowplow/snowplow-tracking-cli
 
 [coveralls-image]: https://coveralls.io/repos/github/snowplow/snowplow-tracking-cli/badge.svg?branch=master
 [coveralls]: https://coveralls.io/github/snowplow/snowplow-tracking-cli?branch=master
