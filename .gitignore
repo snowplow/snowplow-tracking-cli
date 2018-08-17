@@ -24,10 +24,12 @@ _testmain.go
 *.prof
 
 # This project's binaries
-snowplow-tracking-cli
 *.db
 *.db-shm
 *.db-wal
+build/
+dist/
 
 # Vagrant
 .vagrant/
+.release.yml.tmp
