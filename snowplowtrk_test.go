@@ -14,6 +14,7 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	gt "gopkg.in/snowplow/snowplow-golang-tracker.v1/tracker"
@@ -60,6 +61,11 @@ func TestGetSdJSON(t *testing.T) {
 	assert.NotNil(err)
 	assert.Nil(sdj)
 	assert.Equal("invalid character '}' after object key", err.Error())
+
+	sdj, err = getSdJSON("{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/event/jsonschema/1-0-0\"}", "", "")
+	assert.Nil(err)
+	assert.NotNil(sdj)
+	assert.Equal("{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/event/jsonschema/1-0-0\"}", sdj.String())
 }
 
 // --- Tracker
@@ -168,4 +174,10 @@ func TestStringToMap(t *testing.T) {
 	m, err = stringToMap("{\"hello\"}")
 	assert.NotNil(err)
 	assert.Nil(m)
+
+	m, err = stringToMap("{\"timestamp\":1534429336}")
+	assert.Nil(err)
+	assert.NotNil(m)
+	assert.Equal(json.Number("1534429336"), m["timestamp"])
+	assert.Equal(1, len(m))
 }
