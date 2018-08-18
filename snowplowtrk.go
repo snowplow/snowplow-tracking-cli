@@ -19,6 +19,7 @@ import (
 	"github.com/urfave/cli"
 	gt "gopkg.in/snowplow/snowplow-golang-tracker.v1/tracker"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -136,7 +137,9 @@ func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribin
 	} else if sdjson != "" {
 		// Process SelfDescribingJson String
 		res := selfDescJSON{}
-		err := json.Unmarshal([]byte(sdjson), &res)
+		d := json.NewDecoder(strings.NewReader(sdjson))
+		d.UseNumber()
+		err := d.Decode(&res)
 		if err != nil {
 			return nil, err
 		}
@@ -229,7 +232,9 @@ func parseStatusCode(statusCode int) int {
 // to a map.
 func stringToMap(str string) (map[string]interface{}, error) {
 	var jsonDataMap map[string]interface{}
-	err := json.Unmarshal([]byte(str), &jsonDataMap)
+	d := json.NewDecoder(strings.NewReader(str))
+	d.UseNumber()
+	err := d.Decode(&jsonDataMap)
 	if err != nil {
 		return nil, err
 	} else {
