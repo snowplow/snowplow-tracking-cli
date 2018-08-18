@@ -9,11 +9,8 @@ The Snowplow Tracking CLI is a native app to make it easy to send an event to Sn
 You can download the binary for Linux and Windows directly from Bintray:
 
 * [**Linux 64bit Binary**][linux-binary]
-* [**Windows 32bit Binary**][windows-binary]
-
-Unzip the file and the app is called `snowplowtrk`.
-
-The binary for macOS is scheduled for version 0.2.0 - (see [**issue #2**][issue-2]).
+* [**Windows 64bit Binary**][windows-binary]
+* [**macOS 64bit Binary**][darwin-binary]
 
 ## Usage
 
@@ -98,7 +95,7 @@ limitations under the License.
 [travis-image]: https://travis-ci.org/snowplow/snowplow-tracking-cli.png?branch=master
 [travis]: https://travis-ci.org/snowplow/snowplow-tracking-cli
 
-[release-image]: http://img.shields.io/badge/release-0.1.0-6ad7e5.svg?style=flat
+[release-image]: http://img.shields.io/badge/release-0.2.0-6ad7e5.svg?style=flat
 [releases]: https://github.com/snowplow/snowplow-tracking-cli/releases
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
@@ -113,7 +110,6 @@ limitations under the License.
 [golang-tracker]: https://github.com/snowplow/snowplow-golang-tracker 
 [sd-json]: http://snowplowanalytics.com/blog/2014/05/15/introducing-self-describing-jsons/
 
-[linux-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.1.0_linux_amd64.zip
-[windows-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.1.0_windows_386.zip
-[issue-2]: https://github.com/snowplow/snowplow-tracking-cli/issues/2
-
+[linux-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.2.0_linux_amd64.zip
+[windows-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.2.0_windows_amd64.zip
+[darwin-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.2.0_darwin_amd64.zip
