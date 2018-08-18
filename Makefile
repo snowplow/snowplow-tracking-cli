@@ -62,10 +62,10 @@ goveralls: test
 #  RELEASE
 # -----------------------------------------------------------------------------
 
-release: all
+release:
 	release-manager --config .release.yml --check-version --make-artifact --make-version --upload-artifact
 
-release-dry: all
+release-dry:
 	release-manager --config .release.yml --check-version --make-artifact
 
 # -----------------------------------------------------------------------------
