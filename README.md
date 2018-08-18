@@ -36,7 +36,7 @@ where:
 * `--schema` is a schema URI, most likely of the form `iglu:...`
 * `--json` is a (non-self-describing) JSON, of the form `{ ... }`
 
-The idea here is that you can either send in a [**self-describing JSON**] [sd-json], or pass in the constituent parts (i.e. a regular JSON plus a schema URI) and the Snowplow Tracking CLI will construct the final self-describing JSON for you.
+The idea here is that you can either send in a [**self-describing JSON**][sd-json], or pass in the constituent parts (i.e. a regular JSON plus a schema URI) and the Snowplow Tracking CLI will construct the final self-describing JSON for you.
 
 ## Examples
 
