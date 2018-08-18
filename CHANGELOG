@@ -1,3 +1,18 @@
+Version 0.2.0 (2018-08-xx)
+--------------------------
+Fix README formatting (#8)
+Fix Vagrant system (#9)
+Fix failing test suite (#11)
+Add Goreport badge (#4)
+Remove Godeps (#6)
+Update CI/CD to use release-manager (#7)
+Update Copyright to 2016-2018 (#10)
+Format and lint project (#12)
+Unmarshall large integers as json.Number instead of floating point variables (#5)
+Update Snowplow Tracker SDK to v2 (#15)
+Update Travis to test and release on the latest Go versions (#16)
+Add dep for dependency management (#14)
+
 Version 0.1.0 (2016-08-03)
 --------------------------
 Initial release
