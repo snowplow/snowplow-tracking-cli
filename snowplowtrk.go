@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/urfave/cli"
-	gt "gopkg.in/snowplow/snowplow-golang-tracker.v1/tracker"
+	gt "gopkg.in/snowplow/snowplow-golang-tracker.v2/tracker"
 	"os"
 	"strings"
 	"time"
@@ -81,11 +81,6 @@ func main() {
 			Name:  "json, j",
 			Usage: "Non-SelfDescribing JSON, of the form { ... }",
 		},
-		cli.StringFlag{
-			Name:  "dbpath, db",
-			Usage: "File path where the database should be created, e.g. /home/events.db",
-			Value: "events.db",
-		},
 	}
 
 	// Set CLI Action
@@ -96,7 +91,6 @@ func main() {
 		sdjson := c.String("sdjson")
 		schema := c.String("schema")
 		jsonData := c.String("json")
-		dbPath := c.String("dbpath")
 
 		// Check that collector domain exists
 		if collector == "" {
@@ -113,7 +107,7 @@ func main() {
 		trackerChan := make(chan int, 1)
 
 		// Send the event
-		tracker := initTracker(collector, appid, method, dbPath, trackerChan)
+		tracker := initTracker(collector, appid, method, trackerChan)
 		statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj)
 
 		// Parse return code
@@ -162,7 +156,7 @@ func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribin
 
 // initTracker creates a new Tracker ready for use
 // by the application.
-func initTracker(collector string, appid string, requestType string, dbPath string, trackerChan chan int) *gt.Tracker {
+func initTracker(collector string, appid string, requestType string, trackerChan chan int) *gt.Tracker {
 
 	// Create callback function
 	callback := func(s []gt.CallbackResult, f []gt.CallbackResult) {
@@ -181,7 +175,7 @@ func initTracker(collector string, appid string, requestType string, dbPath stri
 	emitter := gt.InitEmitter(gt.RequireCollectorUri(collector),
 		gt.OptionCallback(callback),
 		gt.OptionRequestType(requestType),
-		gt.OptionDbName(dbPath),
+		gt.OptionStorage(gt.InitStorageMemory()),
 	)
 	subject := gt.InitSubject()
 	tracker := gt.InitTracker(
