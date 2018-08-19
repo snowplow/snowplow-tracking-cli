@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
-	gt "gopkg.in/snowplow/snowplow-golang-tracker.v1/tracker"
+	gt "gopkg.in/snowplow/snowplow-golang-tracker.v2/tracker"
 	"net/http"
 	"testing"
 )
@@ -74,7 +74,7 @@ func TestInitTracker(t *testing.T) {
 	assert := assert.New(t)
 	trackerChan := make(chan int, 1)
 
-	tracker := initTracker("com.acme", "myapp", "POST", "/tmp/test-1.db", trackerChan)
+	tracker := initTracker("com.acme", "myapp", "POST", trackerChan)
 	assert.NotNil(tracker)
 	assert.NotNil(tracker.Emitter)
 	assert.NotNil(tracker.Subject)
@@ -99,7 +99,7 @@ func TestTrackSelfDescribingEventGood(t *testing.T) {
 
 	// Setup Tracker
 	trackerChan := make(chan int, 1)
-	tracker := initTracker("com.acme", "myapp", "GET", "/tmp/test-2.db", trackerChan)
+	tracker := initTracker("com.acme", "myapp", "GET", trackerChan)
 	assert.NotNil(tracker)
 
 	// Make SDJ
@@ -131,7 +131,7 @@ func TestTrackSelfDescribingEventBad(t *testing.T) {
 
 	// Setup Tracker
 	trackerChan := make(chan int, 1)
-	tracker := initTracker("com.acme", "myapp", "POST", "/tmp/test-3.db", trackerChan)
+	tracker := initTracker("com.acme", "myapp", "POST", trackerChan)
 	assert.NotNil(tracker)
 
 	// Make SDJ
