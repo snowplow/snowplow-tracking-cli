@@ -1,4 +1,4 @@
-.PHONY: all format lint test goveralls release release-dry clean
+.PHONY: all format lint test goveralls release release-dry dep clean
 
 # -----------------------------------------------------------------------------
 #  CONSTANTS
@@ -25,8 +25,7 @@ bin_windows   = $(windows_dir)/$(bin_name)
 #  BUILDING
 # -----------------------------------------------------------------------------
 
-all:
-	go get -u -t ./...
+all: dep
 	go get -u github.com/mitchellh/gox/...
 	gox -osarch=linux/amd64 -output=$(bin_linux) .
 	gox -osarch=darwin/amd64 -output=$(bin_darwin) .
@@ -48,7 +47,7 @@ lint:
 #  TESTING
 # -----------------------------------------------------------------------------
 
-test:
+test: dep
 	mkdir -p $(coverage_dir)
 	go get -u golang.org/x/tools/cmd/cover/...
 	go test . -tags test -v -covermode=count -coverprofile=$(coverage_out)
@@ -67,6 +66,13 @@ release:
 
 release-dry:
 	release-manager --config .release.yml --check-version --make-artifact
+
+# -----------------------------------------------------------------------------
+#  DEPENDENCIES
+# -----------------------------------------------------------------------------
+
+dep:
+	dep ensure
 
 # -----------------------------------------------------------------------------
 #  CLEANUP
