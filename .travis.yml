@@ -1,6 +1,8 @@
 language: go
 go:
-  - 1.8
+  - "1.9.x"
+  - "1.10.3"
+  - tip
 
 script:
   - make all
@@ -14,7 +16,7 @@ deploy:
   provider: script
   script: make release
   on:
-    condition: '"${TRAVIS_GO_VERSION}" == "1.8"'
+    condition: '"${TRAVIS_GO_VERSION}" == "1.10.3"'
     tags: true
 
 env:
