@@ -35,6 +35,7 @@ where:
 * `--sdjson` is a self-describing JSON of the standard form `{ "schema": "iglu:...", "data": { ... } }`
 * `--schema` is a schema URI, most likely of the form `iglu:...`
 * `--json` is a (non-self-describing) JSON, of the form `{ ... }`
+* `--ipaddress` is optional. It defaults to an empty string
 
 The idea here is that you can either send in a [**self-describing JSON**][sd-json], or pass in the constituent parts (i.e. a regular JSON plus a schema URI) and the Snowplow Tracking CLI will construct the final self-describing JSON for you.
 
