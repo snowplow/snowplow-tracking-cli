@@ -24,7 +24,7 @@ import (
 )
 
 const (
-	appVersion   = "0.2.0"
+	appVersion   = "0.3.0"
 	appName      = "snowplowtrk"
 	appUsage     = "Snowplow Analytics Tracking CLI"
 	appCopyright = "(c) 2016-2018 Snowplow Analytics, LTD"
@@ -106,7 +106,7 @@ func main() {
 
 		// Check that collector domain exists
 		if collector == "" {
-			return cli.NewExitError("FATAL: A --collector needs to be specified.", 1)
+			return cli.NewExitError("fatal: --collector needs to be specified", 1)
 		}
 
 		// Fetch the SelfDescribing JSON
@@ -125,7 +125,7 @@ func main() {
 		// Parse return code
 		returnCode := parseStatusCode(statusCode)
 		if returnCode != 0 {
-			return cli.NewExitError("ERROR: Event failed to send, check your collector endpoint and try again...", returnCode)
+			return cli.NewExitError("error: event failed to send, check your collector endpoint and try again", returnCode)
 		}
 		return nil
 	}
@@ -139,7 +139,7 @@ func main() {
 // and attempts to return a SelfDescribingJson.
 func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribingJson, error) {
 	if sdjson == "" && schema == "" && jsonData == "" {
-		return nil, errors.New("FATAL: A --sdjson or a --schema URI plus a --json needs to be specified.")
+		return nil, errors.New("fatal: --sdjson or --schema URI plus a --json needs to be specified")
 	} else if sdjson != "" {
 		// Process SelfDescribingJson String
 		res := selfDescJSON{}
@@ -151,9 +151,9 @@ func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribin
 		}
 		return gt.InitSelfDescribingJson(res.Schema, res.Data), nil
 	} else if schema != "" && jsonData == "" {
-		return nil, errors.New("FATAL: A --json needs to be specified.")
+		return nil, errors.New("fatal: --json needs to be specified")
 	} else if schema == "" && jsonData != "" {
-		return nil, errors.New("FATAL: A --schema URI needs to be specified.")
+		return nil, errors.New("fatal: --schema URI needs to be specified")
 	} else {
 		// Process Schema and Json Strings
 		jsonDataMap, err := stringToMap(jsonData)
@@ -247,7 +247,6 @@ func stringToMap(str string) (map[string]interface{}, error) {
 	err := d.Decode(&jsonDataMap)
 	if err != nil {
 		return nil, err
-	} else {
-		return jsonDataMap, nil
 	}
+	return jsonDataMap, nil
 }
