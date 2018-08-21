@@ -30,17 +30,17 @@ func TestGetSdJSON(t *testing.T) {
 	sdj, err := getSdJSON("", "", "")
 	assert.Nil(sdj)
 	assert.NotNil(err)
-	assert.Equal("FATAL: A --sdjson or a --schema URI plus a --json needs to be specified.", err.Error())
+	assert.Equal("fatal: --sdjson or --schema URI plus a --json needs to be specified", err.Error())
 
 	sdj, err = getSdJSON("", "iglu:com.acme/event/jsonschema/1-0-0", "")
 	assert.Nil(sdj)
 	assert.NotNil(err)
-	assert.Equal("FATAL: A --json needs to be specified.", err.Error())
+	assert.Equal("fatal: --json needs to be specified", err.Error())
 
 	sdj, err = getSdJSON("", "", "{\"e\":\"pv\"}")
 	assert.Nil(sdj)
 	assert.NotNil(err)
-	assert.Equal("FATAL: A --schema URI needs to be specified.", err.Error())
+	assert.Equal("fatal: --schema URI needs to be specified", err.Error())
 
 	sdj, err = getSdJSON("", "iglu:com.acme/event/jsonschema/1-0-0", "{\"e\":\"pv\"}")
 	assert.Nil(err)
