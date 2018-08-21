@@ -70,6 +70,11 @@ func main() {
 			Value: "GET",
 		},
 		cli.StringFlag{
+			Name:  "protocol, p",
+			Usage: "Protocol[http|https] (Optional)",
+			Value: "https",
+		},
+		cli.StringFlag{
 			Name:  "sdjson, sdj",
 			Usage: "SelfDescribing JSON of the standard form { 'schema': 'iglu:xxx', 'data': { ... } }",
 		},
@@ -88,6 +93,7 @@ func main() {
 		collector := c.String("collector")
 		appid := c.String("appid")
 		method := c.String("method")
+		protocol := c.String("protocol")
 		sdjson := c.String("sdjson")
 		schema := c.String("schema")
 		jsonData := c.String("json")
@@ -107,7 +113,7 @@ func main() {
 		trackerChan := make(chan int, 1)
 
 		// Send the event
-		tracker := initTracker(collector, appid, method, trackerChan)
+		tracker := initTracker(collector, appid, method, protocol, trackerChan)
 		statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj)
 
 		// Parse return code
@@ -156,7 +162,7 @@ func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribin
 
 // initTracker creates a new Tracker ready for use
 // by the application.
-func initTracker(collector string, appid string, requestType string, trackerChan chan int) *gt.Tracker {
+func initTracker(collector string, appid string, method string, protocol string, trackerChan chan int) *gt.Tracker {
 
 	// Create callback function
 	callback := func(s []gt.CallbackResult, f []gt.CallbackResult) {
@@ -174,7 +180,8 @@ func initTracker(collector string, appid string, requestType string, trackerChan
 	// Create Tracker
 	emitter := gt.InitEmitter(gt.RequireCollectorUri(collector),
 		gt.OptionCallback(callback),
-		gt.OptionRequestType(requestType),
+		gt.OptionRequestType(method),
+		gt.OptionProtocol(protocol),
 		gt.OptionStorage(gt.InitStorageMemory()),
 	)
 	subject := gt.InitSubject()

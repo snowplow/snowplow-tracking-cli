@@ -34,6 +34,7 @@ where:
 * `--collector` is the domain for your Snowplow collector, e.g. `snowplow-collector.acme.com`
 * `--appid` is optional (not sent if not set)
 * `--method` is optional. It defaults to `GET`
+* `--protocol` is optional. It defaults to `https`
 * `--sdjson` is a self-describing JSON of the standard form `{ "schema": "iglu:...", "data": { ... } }`
 * `--schema` is a schema URI, most likely of the form `iglu:...`
 * `--json` is a (non-self-describing) JSON, of the form `{ ... }`
