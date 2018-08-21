@@ -86,6 +86,11 @@ func main() {
 			Name:  "json, j",
 			Usage: "Non-SelfDescribing JSON, of the form { ... }",
 		},
+		cli.StringFlag{
+			Name:  "ipaddress, ip",
+			Usage: "Track a custom IP Address (Optional)",
+			Value: "",
+		},
 	}
 
 	// Set CLI Action
@@ -97,6 +102,7 @@ func main() {
 		sdjson := c.String("sdjson")
 		schema := c.String("schema")
 		jsonData := c.String("json")
+		ipAddress := c.String("ipaddress")
 
 		// Check that collector domain exists
 		if collector == "" {
@@ -113,7 +119,7 @@ func main() {
 		trackerChan := make(chan int, 1)
 
 		// Send the event
-		tracker := initTracker(collector, appid, method, protocol, trackerChan)
+		tracker := initTracker(collector, appid, method, protocol, ipAddress, trackerChan)
 		statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj)
 
 		// Parse return code
@@ -162,7 +168,7 @@ func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribin
 
 // initTracker creates a new Tracker ready for use
 // by the application.
-func initTracker(collector string, appid string, method string, protocol string, trackerChan chan int) *gt.Tracker {
+func initTracker(collector string, appid string, method string, protocol string, ipAddress string, trackerChan chan int) *gt.Tracker {
 
 	// Create callback function
 	callback := func(s []gt.CallbackResult, f []gt.CallbackResult) {
@@ -185,6 +191,9 @@ func initTracker(collector string, appid string, method string, protocol string,
 		gt.OptionStorage(gt.InitStorageMemory()),
 	)
 	subject := gt.InitSubject()
+	if ipAddress != "" {
+		subject.SetIpAddress(ipAddress)
+	}
 	tracker := gt.InitTracker(
 		gt.RequireEmitter(emitter),
 		gt.OptionSubject(subject),
