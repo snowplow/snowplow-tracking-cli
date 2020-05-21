@@ -96,7 +96,7 @@ limitations under the License.
 [travis-image]: https://travis-ci.org/snowplow/snowplow-tracking-cli.png?branch=master
 [travis]: https://travis-ci.org/snowplow/snowplow-tracking-cli
 
-[release-image]: http://img.shields.io/badge/release-0.3.0-6ad7e5.svg?style=flat
+[release-image]: http://img.shields.io/badge/release-0.4.0-6ad7e5.svg?style=flat
 [releases]: https://github.com/snowplow/snowplow-tracking-cli/releases
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
@@ -111,6 +111,6 @@ limitations under the License.
 [golang-tracker]: https://github.com/snowplow/snowplow-golang-tracker 
 [sd-json]: http://snowplowanalytics.com/blog/2014/05/15/introducing-self-describing-jsons/
 
-[linux-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.3.0_linux_amd64.zip
-[windows-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.3.0_windows_amd64.zip
-[darwin-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.3.0_darwin_amd64.zip
+[linux-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_linux_amd64.zip
+[windows-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_windows_amd64.zip
+[darwin-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_darwin_amd64.zip
