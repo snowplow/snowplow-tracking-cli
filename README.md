@@ -4,6 +4,37 @@
 
 The Snowplow Tracking CLI is a native app to make it easy to send an event to Snowplow from the command line. Use this to embed Snowplow tracking into your shell scripts and terminal sessions.
 
+## Quick start
+
+Assuming git, [Vagrant][vagrant-url] and [VirtualBox][virtualbox-url] are installed:
+
+```bash
+ host> git clone https://github.com/snowplow/snowplow-tracking-cli
+ host> cd snowplow-tracking-cli
+ host> vagrant up && vagrant ssh
+guest> cd /opt/gopath/src/github.com/snowplow/snowplow-tracking-cli
+guest> make test
+guest> make
+```
+
+**Note:** You do not have to use Vagrant if you already have Golang installed on your host.
+
+To remove all build files:
+
+```bash
+guest> make clean
+```
+
+To format the golang code in the source directory:
+
+```bash
+guest> make format
+```
+
+**Note:** Always run `make format` before submitting any code.
+
+**Note:** The `make test` command also generates a code coverage file which can be found at `build/coverage/coverage.html`.
+
 ## Installing
 
 You can download the binary for Linux and Windows directly from Bintray:
@@ -36,6 +67,7 @@ where:
 * `--schema` is a schema URI, most likely of the form `iglu:...`
 * `--json` is a (non-self-describing) JSON, of the form `{ ... }`
 * `--ipaddress` is optional. It defaults to an empty string
+* `--contexts` is optional. It defaults to an empty JSON array `[]`
 
 The idea here is that you can either send in a [**self-describing JSON**][sd-json], or pass in the constituent parts (i.e. a regular JSON plus a schema URI) and the Snowplow Tracking CLI will construct the final self-describing JSON for you.
 
@@ -114,3 +146,6 @@ limitations under the License.
 [linux-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_linux_amd64.zip
 [windows-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_windows_amd64.zip
 [darwin-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_darwin_amd64.zip
+
+[vagrant-url]: http://docs.vagrantup.com/v2/installation/index.html
+[virtualbox-url]: https://www.virtualbox.org/wiki/Downloads
