@@ -92,6 +92,11 @@ func main() {
 			Usage: "Track a custom IP Address (Optional)",
 			Value: "",
 		},
+		cli.StringFlag{
+			Name:  "contexts, ctx",
+			Usage: "Array of SelfDescribing JSON to add as context to the outbound event",
+			Value: "[]",
+		},
 	}
 
 	// Set CLI Action
@@ -104,6 +109,7 @@ func main() {
 		schema := c.String("schema")
 		jsonData := c.String("json")
 		ipAddress := c.String("ipaddress")
+		contexts := c.String("contexts")
 
 		// Check that collector domain exists
 		if collector == "" {
@@ -116,12 +122,18 @@ func main() {
 			return cli.NewExitError(err.Error(), 1)
 		}
 
+		// Process the contexts array
+		contextArr, err := getContexts(contexts)
+		if err != nil {
+			return cli.NewExitError(err.Error(), 1)
+		}
+
 		// Create channel to block for events
 		trackerChan := make(chan int, 1)
 
 		// Send the event
 		tracker := initTracker(collector, appid, method, protocol, ipAddress, trackerChan, nil)
-		statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj)
+		statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj, contextArr)
 
 		// Parse return code
 		returnCode := parseStatusCode(statusCode)
@@ -163,6 +175,28 @@ func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribin
 		}
 		return gt.InitSelfDescribingJson(schema, jsonDataMap), nil
 	}
+}
+
+// getContexts parses a JSON array string and attempts to convert it into
+// an array of SelfDescribingJson objects to track.
+func getContexts(contexts string) ([]gt.SelfDescribingJson, error) {
+	res := []selfDescJSON{}
+	d := json.NewDecoder(strings.NewReader(contexts))
+	d.UseNumber()
+	err := d.Decode(&res)
+	if err != nil {
+		return nil, err
+	}
+
+	sdjArr := make([]gt.SelfDescribingJson, len(res))
+	for i, context := range res {
+		sdj := gt.InitSelfDescribingJson(
+			context.Schema,
+			context.Data,
+		)
+		sdjArr[i] = *sdj
+	}
+	return sdjArr, nil
 }
 
 // --- Tracker
@@ -207,9 +241,10 @@ func initTracker(collector string, appid string, method string, protocol string,
 
 // trackSelfDescribingEvent will pass an event to
 // the tracker for sending.
-func trackSelfDescribingEvent(tracker *gt.Tracker, trackerChan chan int, sdj *gt.SelfDescribingJson) int {
+func trackSelfDescribingEvent(tracker *gt.Tracker, trackerChan chan int, sdj *gt.SelfDescribingJson, contexts []gt.SelfDescribingJson) int {
 	tracker.TrackSelfDescribingEvent(gt.SelfDescribingEvent{
-		Event: sdj,
+		Event:    sdj,
+		Contexts: contexts,
 	})
 	returnCode := <-trackerChan
 

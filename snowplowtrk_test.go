@@ -69,6 +69,26 @@ func TestGetSdJSON(t *testing.T) {
 	assert.Equal("{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/event/jsonschema/1-0-0\"}", sdj.String())
 }
 
+func TestGetContexts(t *testing.T) {
+	assert := assert.New(t)
+
+	contexts, err := getContexts("")
+	assert.Nil(contexts)
+	assert.NotNil(err)
+
+	contexts, err = getContexts("[]")
+	assert.NotNil(contexts)
+	assert.Nil(err)
+	assert.Equal(0, len(contexts))
+
+	contexts, err = getContexts("[{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/context_1/jsonschema/1-0-0\"},{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/context_1/jsonschema/1-0-0\"}]")
+	assert.NotNil(contexts)
+	assert.Nil(err)
+	assert.Equal(2, len(contexts))
+	assert.Equal("{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/context_1/jsonschema/1-0-0\"}", contexts[0].String())
+	assert.Equal("{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/context_1/jsonschema/1-0-0\"}", contexts[1].String())
+}
+
 // --- Tracker
 
 func TestInitTracker(t *testing.T) {
@@ -112,8 +132,11 @@ func TestTrackSelfDescribingEventGood(t *testing.T) {
 	jsonDataMap, _ := stringToMap("{\"hello\":\"world\"}")
 	sdj := gt.InitSelfDescribingJson(schemaStr, jsonDataMap)
 
+	// Make contexts
+	contexts, _ := getContexts("[{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/context_1/jsonschema/1-0-0\"},{\"data\":{\"timestamp\":1534429336},\"schema\":\"iglu:com.acme/context_1/jsonschema/1-0-0\"}]")
+
 	// Send an event
-	statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj)
+	statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj, contexts)
 	assert.Equal(200, statusCode)
 	assert.Equal(1, len(requests))
 }
@@ -149,7 +172,7 @@ func TestTrackSelfDescribingEventBad(t *testing.T) {
 	sdj := gt.InitSelfDescribingJson(schemaStr, jsonDataMap)
 
 	// Send an event
-	statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj)
+	statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj, nil)
 	assert.Equal(404, statusCode)
 	assert.Equal(1, len(requests))
 }
