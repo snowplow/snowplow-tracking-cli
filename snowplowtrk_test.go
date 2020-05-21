@@ -16,10 +16,11 @@ package main
 import (
 	"encoding/json"
 	"github.com/jarcoal/httpmock"
+	gt "github.com/snowplow/snowplow-golang-tracker/v2/tracker"
 	"github.com/stretchr/testify/assert"
-	gt "gopkg.in/snowplow/snowplow-golang-tracker.v2/tracker"
 	"net/http"
 	"testing"
+	"time"
 )
 
 // --- CLI
@@ -74,7 +75,7 @@ func TestInitTracker(t *testing.T) {
 	assert := assert.New(t)
 	trackerChan := make(chan int, 1)
 
-	tracker := initTracker("com.acme", "myapp", "POST", "https", "", trackerChan)
+	tracker := initTracker("com.acme", "myapp", "POST", "https", "", trackerChan, nil)
 	assert.NotNil(tracker)
 	assert.NotNil(tracker.Emitter)
 	assert.NotNil(tracker.Subject)
@@ -96,10 +97,14 @@ func TestTrackSelfDescribingEventGood(t *testing.T) {
 			return httpmock.NewStringResponse(200, ""), nil
 		},
 	)
+	httpClient := &http.Client{
+		Timeout:   time.Duration(1 * time.Second),
+		Transport: http.DefaultTransport,
+	}
 
 	// Setup Tracker
 	trackerChan := make(chan int, 1)
-	tracker := initTracker("com.acme", "myapp", "GET", "http", "", trackerChan)
+	tracker := initTracker("com.acme", "myapp", "GET", "http", "", trackerChan, httpClient)
 	assert.NotNil(tracker)
 
 	// Make SDJ
@@ -128,10 +133,14 @@ func TestTrackSelfDescribingEventBad(t *testing.T) {
 			return httpmock.NewStringResponse(404, ""), nil
 		},
 	)
+	httpClient := &http.Client{
+		Timeout:   time.Duration(1 * time.Second),
+		Transport: http.DefaultTransport,
+	}
 
 	// Setup Tracker
 	trackerChan := make(chan int, 1)
-	tracker := initTracker("com.acme", "myapp", "POST", "http", "", trackerChan)
+	tracker := initTracker("com.acme", "myapp", "POST", "http", "", trackerChan, httpClient)
 	assert.NotNil(tracker)
 
 	// Make SDJ

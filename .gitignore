@@ -1,38 +1,18 @@
-# Compiled Object files, Static and Dynamic libs (Shared Objects)
-*.o
-*.a
-*.so
+# Golang
+vendor/
 
-# Folders
-_obj
-_test
+# IntelliJ
+.idea
 
-# Architecture specific extensions/prefixes
-*.[568vq]
-[568vq].out
-
-*.cgo1.go
-*.cgo2.c
-_cgo_defun.c
-_cgo_gotypes.go
-_cgo_export.*
-
-_testmain.go
-
-*.exe
-*.test
-*.prof
-
-# This project's binaries
-*.db
-*.db-shm
-*.db-wal
-build/
-dist/
+# macOS
+.DS_Store
 
 # Vagrant
-.vagrant/
-.release.yml.tmp
+*.log
+.vagrant
 
-# Dep
-vendor/
+# Project
+build/
+dist/
+.release.yml.tmp
+config.yml

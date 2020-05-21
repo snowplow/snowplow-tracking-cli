@@ -16,8 +16,9 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	gt "github.com/snowplow/snowplow-golang-tracker/v2/tracker"
 	"github.com/urfave/cli"
-	gt "gopkg.in/snowplow/snowplow-golang-tracker.v2/tracker"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -119,7 +120,7 @@ func main() {
 		trackerChan := make(chan int, 1)
 
 		// Send the event
-		tracker := initTracker(collector, appid, method, protocol, ipAddress, trackerChan)
+		tracker := initTracker(collector, appid, method, protocol, ipAddress, trackerChan, nil)
 		statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj)
 
 		// Parse return code
@@ -168,7 +169,7 @@ func getSdJSON(sdjson string, schema string, jsonData string) (*gt.SelfDescribin
 
 // initTracker creates a new Tracker ready for use
 // by the application.
-func initTracker(collector string, appid string, method string, protocol string, ipAddress string, trackerChan chan int) *gt.Tracker {
+func initTracker(collector string, appid string, method string, protocol string, ipAddress string, trackerChan chan int, httpClient *http.Client) *gt.Tracker {
 
 	// Create callback function
 	callback := func(s []gt.CallbackResult, f []gt.CallbackResult) {
@@ -189,6 +190,7 @@ func initTracker(collector string, appid string, method string, protocol string,
 		gt.OptionRequestType(method),
 		gt.OptionProtocol(protocol),
 		gt.OptionStorage(gt.InitStorageMemory()),
+		gt.OptionHttpClient(httpClient),
 	)
 	subject := gt.InitSubject()
 	if ipAddress != "" {

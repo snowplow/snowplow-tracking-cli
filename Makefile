@@ -1,4 +1,4 @@
-.PHONY: all format lint test goveralls release release-dry dep clean
+.PHONY: all format lint tidy test goveralls release release-dry clean
 
 # -----------------------------------------------------------------------------
 #  CONSTANTS
@@ -25,37 +25,41 @@ bin_windows   = $(windows_dir)/$(bin_name)
 #  BUILDING
 # -----------------------------------------------------------------------------
 
-all: dep
-	go get -u github.com/mitchellh/gox/...
-	gox -osarch=linux/amd64 -output=$(bin_linux) .
-	gox -osarch=darwin/amd64 -output=$(bin_darwin) .
-	gox -osarch=windows/amd64 -output=$(bin_windows) .
+all:
+	GO111MODULE=on go get -u github.com/mitchellh/gox
+	GO111MODULE=on gox -osarch=linux/amd64 -output=$(bin_linux) .
+	GO111MODULE=on gox -osarch=darwin/amd64 -output=$(bin_darwin) .
+	GO111MODULE=on gox -osarch=windows/amd64 -output=$(bin_windows) .
 
 # -----------------------------------------------------------------------------
 #  FORMATTING
 # -----------------------------------------------------------------------------
 
 format:
-	go fmt .
-	gofmt -s -w .
+	GO111MODULE=on go fmt .
+	GO111MODULE=on gofmt -s -w .
 
 lint:
-	go get -u github.com/golang/lint/golint
-	golint .
+	GO111MODULE=on go get -u golang.org/x/lint/golint
+	GO111MODULE=on golint .
+
+tidy:
+	GO111MODULE=on go mod tidy
+
 
 # -----------------------------------------------------------------------------
 #  TESTING
 # -----------------------------------------------------------------------------
 
-test: dep
+test:
 	mkdir -p $(coverage_dir)
-	go get -u golang.org/x/tools/cmd/cover/...
-	go test . -tags test -v -covermode=count -coverprofile=$(coverage_out)
-	go tool cover -html=$(coverage_out) -o $(coverage_html)
+	GO111MODULE=on go get -u golang.org/x/tools/cmd/cover
+	GO111MODULE=on go test . -tags test -v -covermode=count -coverprofile=$(coverage_out)
+	GO111MODULE=on go tool cover -html=$(coverage_out) -o $(coverage_html)
 
 goveralls: test
-	go get -u github.com/mattn/goveralls/...
-	goveralls -coverprofile=$(coverage_out) -service=travis-ci
+	GO111MODULE=on go get -u github.com/mattn/goveralls
+	GO111MODULE=on goveralls -coverprofile=$(coverage_out) -service=travis-ci
 
 # -----------------------------------------------------------------------------
 #  RELEASE
@@ -66,13 +70,6 @@ release:
 
 release-dry:
 	release-manager --config .release.yml --check-version --make-artifact
-
-# -----------------------------------------------------------------------------
-#  DEPENDENCIES
-# -----------------------------------------------------------------------------
-
-dep:
-	dep ensure
 
 # -----------------------------------------------------------------------------
 #  CLEANUP
