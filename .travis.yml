@@ -1,25 +1,22 @@
+sudo: required
 language: go
 go:
-  - "1.9.x"
-  - "1.10.3"
-  - tip
-
-before_install:
-  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - "1.13.8"
 
 script:
   - make all
   - make goveralls
 
 before_deploy:
-  - pip install --user release-manager==0.1.0
+  - sudo pip install pyOpenSSL==16.2.0
+  - pip install --user release-manager==0.4.1
 
 deploy:
   skip_cleanup: true
   provider: script
   script: make release
   on:
-    condition: '"${TRAVIS_GO_VERSION}" == "1.10.3"'
+    condition: '"${TRAVIS_GO_VERSION}" == "1.13.8"'
     tags: true
 
 env:
