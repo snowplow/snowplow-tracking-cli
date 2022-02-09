@@ -37,7 +37,7 @@ guest> make format
 
 ## Installing
 
-You can download the binary for Linux and Windows directly from Bintray:
+You can download the binary for Linux, Windows, and macOS directly from Github:
 
 * [**Linux 64bit Binary**][linux-binary]
 * [**Windows 64bit Binary**][windows-binary]
@@ -143,9 +143,9 @@ limitations under the License.
 [golang-tracker]: https://github.com/snowplow/snowplow-golang-tracker 
 [sd-json]: http://snowplowanalytics.com/blog/2014/05/15/introducing-self-describing-jsons/
 
-[linux-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_linux_amd64.zip
-[windows-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_windows_amd64.zip
-[darwin-binary]: https://bintray.com/snowplow/snowplow-generic/download_file?file_path=snowplow_tracking_cli_0.4.0_darwin_amd64.zip
+[linux-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.4.0/snowplow_tracking_cli_0.4.0_linux_amd64.zip
+[windows-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.4.0/snowplow_tracking_cli_0.4.0_windows_amd64.zip
+[darwin-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.4.0/snowplow_tracking_cli_0.4.0_darwin_amd64.zip
 
 [vagrant-url]: http://docs.vagrantup.com/v2/installation/index.html
 [virtualbox-url]: https://www.virtualbox.org/wiki/Downloads
