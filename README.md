@@ -48,13 +48,13 @@ You can download the binary for Linux, Windows, and macOS directly from Github:
 The command line interface is as follows:
 
 ```bash
-snowplowtrk --collector={{COLLECTOR_DOMAIN}} --appid={{APP_ID}} --method=[POST|GET] --sdjson={{SELF_DESC_JSON}}
+snowplow-tracking-cli --collector={{COLLECTOR_DOMAIN}} --appid={{APP_ID}} --method=[POST|GET] --sdjson={{SELF_DESC_JSON}}
 ```
-    
+
 or:
 
 ```bash
-snowplowtrk --collector={{COLLECTOR_DOMAIN}} --appid={{APP_ID}} --method=[POST|GET] --schema={{SCHEMA_URI}} --json={{JSON}}
+snowplow-tracking-cli --collector={{COLLECTOR_DOMAIN}} --appid={{APP_ID}} --method=[POST|GET] --schema={{SCHEMA_URI}} --json={{JSON}}
 ```
 
 where:
@@ -74,11 +74,11 @@ The idea here is that you can either send in a [**self-describing JSON**][sd-jso
 ## Examples
 
 ```bash
-snowplowtrk --collector snowplow-collector.acme.com --appid myappid --method POST --schema iglu:com.snowplowanalytics.snowplow/event/jsonschema/1-0-0 --json "{\"hello\":\"world\"}"
+snowplow-tracking-cli --collector snowplow-collector.acme.com --appid myappid --method POST --schema iglu:com.snowplowanalytics.snowplow/event/jsonschema/1-0-0 --json "{\"hello\":\"world\"}"
 ```
 
 ```bash
-snowplowtrk --collector snowplow-collector.acme.com --appid myappid --method POST --sdjson "{\"schema\":\"iglu:com.snowplowanalytics.snowplow/event/jsonschema/1-0-0\", \"data\":{\"hello\":\"world\"}}"
+snowplow-tracking-cli --collector snowplow-collector.acme.com --appid myappid --method POST --sdjson "{\"schema\":\"iglu:com.snowplowanalytics.snowplow/event/jsonschema/1-0-0\", \"data\":{\"hello\":\"world\"}}"
 ```
 
 ## Under the hood
@@ -87,7 +87,7 @@ There is no buffering in the Snowplow Tracking CLI - each event is sent as an in
 
 Under the hood, the app uses the [**Snowplow Golang Tracker**][golang-tracker].
 
-The Snowplow Tracking CLI will exit once the Snowplow collector has responded. The return codes from `snowplowtrk` are as follows:
+The Snowplow Tracking CLI will exit once the Snowplow collector has responded. The return codes from `snowplow-tracking-cli` are as follows:
 
 * 0 if the Snowplow collector responded with an OK status (2xx or 3xx)
 * 4 if the Snowplow collector responded with a 4xx status
@@ -96,15 +96,15 @@ The Snowplow Tracking CLI will exit once the Snowplow collector has responded. T
 
 ## Building
 
-Add snowplowtrk and its package dependencies to your go src directory:
+Add snowplow-tracking-cli and its package dependencies to your go src directory:
 
 ```
 $ go get -v github.com/snowplow/snowplow-tracking-cli
 ```
 
-Once the get completes, you should find your new `snowplowtrk` executable sitting inside `$GOPATH/bin/`.
+Once the get completes, you should find your new `snowplow-tracking-cli` executable sitting inside `$GOPATH/bin/`.
 
-To update snowplowtrk dependencies, use `go get` with the `-u` option.
+To update snowplow-tracking-cli dependencies, use `go get` with the `-u` option.
 
 ```
 $ go get -u -v github.com/snowplow/snowplow-tracking-cli
@@ -140,7 +140,7 @@ limitations under the License.
 [coveralls-image]: https://coveralls.io/repos/github/snowplow/snowplow-tracking-cli/badge.svg?branch=master
 [coveralls]: https://coveralls.io/github/snowplow/snowplow-tracking-cli?branch=master
 
-[golang-tracker]: https://github.com/snowplow/snowplow-golang-tracker 
+[golang-tracker]: https://github.com/snowplow/snowplow-golang-tracker
 [sd-json]: http://snowplowanalytics.com/blog/2014/05/15/introducing-self-describing-jsons/
 
 [linux-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.4.0/snowplow_tracking_cli_0.4.0_linux_amd64.zip
