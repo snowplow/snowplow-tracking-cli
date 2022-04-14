@@ -128,7 +128,7 @@ limitations under the License.
 [gh-actions]: https://github.com/snowplow/snowplow-tracking-cli/actions
 [gh-actions-image]: https://github.com/snowplow/snowplow-tracking-cli/workflows/Build/badge.svg?branch=master
 
-[release-image]: http://img.shields.io/badge/release-0.4.0-6ad7e5.svg?style=flat
+[release-image]: http://img.shields.io/badge/release-0.5.0-6ad7e5.svg?style=flat
 [releases]: https://github.com/snowplow/snowplow-tracking-cli/releases
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
@@ -143,6 +143,6 @@ limitations under the License.
 [golang-tracker]: https://github.com/snowplow/snowplow-golang-tracker
 [sd-json]: http://snowplowanalytics.com/blog/2014/05/15/introducing-self-describing-jsons/
 
-[linux-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.4.0/snowplow_tracking_cli_0.4.0_linux_amd64.zip
-[windows-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.4.0/snowplow_tracking_cli_0.4.0_windows_amd64.zip
-[darwin-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.4.0/snowplow_tracking_cli_0.4.0_darwin_amd64.zip
+[linux-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.5.0/snowplow_tracking_cli_0.5.0_linux_amd64.zip
+[windows-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.5.0/snowplow_tracking_cli_0.5.0_windows_amd64.zip
+[darwin-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.5.0/snowplow_tracking_cli_0.5.0_darwin_amd64.zip
