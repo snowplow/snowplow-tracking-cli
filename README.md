@@ -12,6 +12,12 @@ You can download the binary for Linux, Windows, and macOS directly from Github:
 * [**Windows 64bit Binary**][windows-binary]
 * [**macOS 64bit Binary**][darwin-binary]
 
+There is also a Docker Container available at: https://hub.docker.com/r/snowplow/snowplow-tracking-cli
+
+```bash
+docker run snowplow/snowplow-tracking-cli:latest --collector={{COLLECTOR_DOMAIN}} --appid={{APP_ID}} --method=[POST|GET] --sdjson={{SELF_DESC_JSON}}
+```
+
 ## Usage
 
 The command line interface is as follows:
