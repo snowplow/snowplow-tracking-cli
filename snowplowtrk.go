@@ -25,7 +25,7 @@ import (
 )
 
 const (
-	appVersion   = "0.5.0-rc2"
+	appVersion   = "0.5.0-rc3"
 	appName      = "snowplowtrk"
 	appUsage     = "Snowplow Analytics Tracking CLI"
 	appCopyright = "(c) 2016-2022 Snowplow Analytics, LTD"
