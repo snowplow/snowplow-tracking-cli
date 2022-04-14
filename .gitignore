@@ -7,10 +7,6 @@ vendor/
 # macOS
 .DS_Store
 
-# Vagrant
-*.log
-.vagrant
-
 # Project
 build/
 dist/
