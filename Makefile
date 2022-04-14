@@ -1,4 +1,4 @@
-.PHONY: all gox cli cli-linux cli-darwin cli-windows format lint tidy update test-setup test goveralls clean
+.PHONY: all gox cli cli-linux cli-darwin cli-windows container format lint tidy update test-setup test goveralls container-release clean
 
 # -----------------------------------------------------------------------------
 #  CONSTANTS
@@ -24,11 +24,13 @@ bin_linux   = $(linux_out_dir)/$(bin_name)
 bin_darwin  = $(darwin_out_dir)/$(bin_name)
 bin_windows = $(windows_out_dir)/$(bin_name)
 
+container_name = snowplow/$(bin_name)
+
 # -----------------------------------------------------------------------------
 #  BUILDING
 # -----------------------------------------------------------------------------
 
-all: cli
+all: cli container
 
 gox:
 	GO111MODULE=on go install github.com/mitchellh/gox@latest
@@ -50,6 +52,9 @@ cli-darwin: gox
 
 cli-windows: gox
 	GO111MODULE=on CGO_ENABLED=0 gox -osarch=windows/amd64 -output=$(bin_windows) .
+
+container: cli-linux
+	docker build -t $(container_name):$(version) .
 
 # -----------------------------------------------------------------------------
 #  FORMATTING
@@ -85,6 +90,16 @@ test: test-setup
 goveralls: test
 	GO111MODULE=on go install github.com/mattn/goveralls@latest
 	GO111MODULE=on goveralls -coverprofile=$(coverage_out) -service=github
+
+# -----------------------------------------------------------------------------
+#  RELEASE
+# -----------------------------------------------------------------------------
+
+container-release:
+	@-docker login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD)
+	docker push $(container_name):$(version)
+	docker tag ${container_name}:${version} ${container_name}:latest
+	docker push $(container_name):latest
 
 # -----------------------------------------------------------------------------
 #  CLEANUP
