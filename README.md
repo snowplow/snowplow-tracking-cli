@@ -1,4 +1,4 @@
-[![Build Status][travis-image]][travis] [![Coveralls][coveralls-image]][coveralls] [![Goreport][goreport-image]][goreport] [![Release][release-image]][releases] [![License][license-image]][license]
+[![Build Status][gh-actions-image]][gh-actions] [![Coveralls][coveralls-image]][coveralls] [![Go Report Card][goreport-image]][goreport] [![Release][release-image]][releases] [![License][license-image]][license]
 
 ## Overview
 
@@ -119,10 +119,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-[license]: http://www.apache.org/licenses/LICENSE-2.0
-
-[travis-image]: https://travis-ci.org/snowplow/snowplow-tracking-cli.png?branch=master
-[travis]: https://travis-ci.org/snowplow/snowplow-tracking-cli
+[gh-actions]: https://github.com/snowplow/snowplow-tracking-cli/actions
+[gh-actions-image]: https://github.com/snowplow/snowplow-tracking-cli/workflows/Build/badge.svg?branch=master
 
 [release-image]: http://img.shields.io/badge/release-0.4.0-6ad7e5.svg?style=flat
 [releases]: https://github.com/snowplow/snowplow-tracking-cli/releases
