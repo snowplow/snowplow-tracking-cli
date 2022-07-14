@@ -66,6 +66,11 @@ func main() {
 			Value: appName,
 		},
 		cli.StringFlag{
+			Name:  "namespace, ns",
+			Usage: "Tracker Namespace (Optional)",
+			Value: appName,
+		},
+		cli.StringFlag{
 			Name:  "method, m",
 			Usage: "Method[POST|GET] (Optional)",
 			Value: "GET",
@@ -103,6 +108,7 @@ func main() {
 	app.Action = func(c *cli.Context) error {
 		collector := c.String("collector")
 		appid := c.String("appid")
+		namespace := c.String("namespace")
 		method := c.String("method")
 		protocol := c.String("protocol")
 		sdjson := c.String("sdjson")
@@ -132,7 +138,7 @@ func main() {
 		trackerChan := make(chan int, 1)
 
 		// Send the event
-		tracker := initTracker(collector, appid, method, protocol, ipAddress, trackerChan, nil)
+		tracker := initTracker(collector, appid, namespace, method, protocol, ipAddress, trackerChan, nil)
 		statusCode := trackSelfDescribingEvent(tracker, trackerChan, sdj, contextArr)
 
 		// Parse return code
@@ -203,7 +209,7 @@ func getContexts(contexts string) ([]gt.SelfDescribingJson, error) {
 
 // initTracker creates a new Tracker ready for use
 // by the application.
-func initTracker(collector string, appid string, method string, protocol string, ipAddress string, trackerChan chan int, httpClient *http.Client) *gt.Tracker {
+func initTracker(collector string, appid string, namespace string, method string, protocol string, ipAddress string, trackerChan chan int, httpClient *http.Client) *gt.Tracker {
 
 	// Create callback function
 	callback := func(s []gt.CallbackResult, f []gt.CallbackResult) {
@@ -234,6 +240,7 @@ func initTracker(collector string, appid string, method string, protocol string,
 		gt.RequireEmitter(emitter),
 		gt.OptionSubject(subject),
 		gt.OptionAppId(appid),
+		gt.OptionNamespace(namespace),
 	)
 
 	return tracker
