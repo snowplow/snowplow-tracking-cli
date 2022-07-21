@@ -1,4 +1,4 @@
-.PHONY: all gox cli cli-linux cli-darwin cli-windows container format lint tidy update test-setup test goveralls container-release clean
+.PHONY: all gox cli cli-linux cli-darwin cli-windows cli-arm container format lint tidy update test-setup test goveralls container-release clean
 
 # -----------------------------------------------------------------------------
 #  CONSTANTS
@@ -16,13 +16,15 @@ output_dir   = $(build_dir)/output
 compiled_dir = $(build_dir)/compiled
 
 linux_out_dir   = $(output_dir)/linux
-darwin_out_dir  = $(output_dir)/darwin
+darwin_out_dir  = $(output_dir)/darwin/amd64
+arm_out_dir     = $(output_dir)/darwin/arm64
 windows_out_dir = $(output_dir)/windows
 
-bin_name    = snowplow-tracking-cli
-bin_linux   = $(linux_out_dir)/$(bin_name)
-bin_darwin  = $(darwin_out_dir)/$(bin_name)
-bin_windows = $(windows_out_dir)/$(bin_name)
+bin_name       = snowplow-tracking-cli
+bin_linux      = $(linux_out_dir)/$(bin_name)
+bin_darwin     = $(darwin_out_dir)/$(bin_name)
+bin_arm        = $(arm_out_dir)/$(bin_name)
+bin_windows    = $(windows_out_dir)/$(bin_name)
 
 container_name = snowplow/$(bin_name)
 
@@ -36,13 +38,15 @@ gox:
 	GO111MODULE=on go install github.com/mitchellh/gox@latest
 	mkdir -p $(compiled_dir)
 
-cli: gox cli-linux cli-darwin cli-windows
+cli: gox cli-linux cli-darwin cli-windows cli-arm
 	(cd $(linux_out_dir) && zip -r staging.zip $(bin_name))
 	mv $(linux_out_dir)/staging.zip $(compiled_dir)/snowplow_tracking_cli_$(version)_linux_amd64.zip
 	(cd $(darwin_out_dir) && zip -r staging.zip $(bin_name))
 	mv $(darwin_out_dir)/staging.zip $(compiled_dir)/snowplow_tracking_cli_$(version)_darwin_amd64.zip
 	(cd $(windows_out_dir) && zip -r staging.zip $(bin_name).exe)
 	mv $(windows_out_dir)/staging.zip $(compiled_dir)/snowplow_tracking_cli_$(version)_windows_amd64.zip
+	(cd $(arm_out_dir) && zip -r staging.zip $(bin_name))
+	mv $(arm_out_dir)/staging.zip $(compiled_dir)/snowplow_tracking_cli_$(version)_darwin_arm64.zip
 
 cli-linux: gox
 	GO111MODULE=on CGO_ENABLED=0 gox -osarch=linux/amd64 -output=$(bin_linux) .
@@ -52,6 +56,9 @@ cli-darwin: gox
 
 cli-windows: gox
 	GO111MODULE=on CGO_ENABLED=0 gox -osarch=windows/amd64 -output=$(bin_windows) .
+
+cli-arm: gox
+	GO111MODULE=on CGO_ENABLED=0 gox -osarch=darwin/arm64 -output=$(bin_arm) .
 
 container: cli-linux
 	docker build -t $(container_name):$(version) .

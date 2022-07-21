@@ -37,24 +37,17 @@ jobs:
     - name: Compile
       run: make all
 
-    - name: Extract tag version from ref
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v2
       with:
-        name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: Upload release binaries
-      uses: alexellis/upload-assets@0.2.3
+        version: latest
+        args: release --rm-dist
+        workdir: .
       env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        asset_paths: '["./build/compiled/*"]'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Container
+      run: make container
 
     - name: Publish to DockerHub
       run: make container-release
