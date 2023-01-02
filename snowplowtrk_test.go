@@ -15,12 +15,13 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/jarcoal/httpmock"
-	gt "github.com/snowplow/snowplow-golang-tracker/v2/tracker"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/jarcoal/httpmock"
+	gt "github.com/snowplow/snowplow-golang-tracker/v3/tracker"
+	"github.com/stretchr/testify/assert"
 )
 
 // --- CLI

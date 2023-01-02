@@ -16,12 +16,14 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	gt "github.com/snowplow/snowplow-golang-tracker/v2/tracker"
-	"github.com/urfave/cli"
 	"net/http"
 	"os"
 	"strings"
 	"time"
+
+	storagememory "github.com/snowplow/snowplow-golang-tracker/v3/pkg/storage/memory"
+	gt "github.com/snowplow/snowplow-golang-tracker/v3/tracker"
+	"github.com/urfave/cli"
 )
 
 const (
@@ -220,10 +222,10 @@ func initTracker(collector string, appid string, method string, protocol string,
 
 	// Create Tracker
 	emitter := gt.InitEmitter(gt.RequireCollectorUri(collector),
+		gt.RequireStorage(storagememory.Init()),
 		gt.OptionCallback(callback),
 		gt.OptionRequestType(method),
 		gt.OptionProtocol(protocol),
-		gt.OptionStorage(gt.InitStorageMemory()),
 		gt.OptionHttpClient(httpClient),
 	)
 	subject := gt.InitSubject()
