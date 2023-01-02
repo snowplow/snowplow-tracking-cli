@@ -8,9 +8,10 @@ The Snowplow Tracking CLI is a native app to make it easy to send an event to Sn
 
 You can download the binary for Linux, Windows, and macOS directly from Github:
 
-* [**Linux 64bit Binary**][linux-binary]
-* [**Windows 64bit Binary**][windows-binary]
-* [**macOS 64bit Binary**][darwin-binary]
+* [**Linux AMD 64bit Binary**][linux-amd64-binary]
+* [**Windows AMD 64bit Binary**][windows-amd64-binary]
+* [**macOS AMD 64bit Binary**][darwin-amd64-binary]
+* [**macOS ARM 64bit Binary**][darwin-arm64-binary]
 
 There is also a Docker Container available at: https://hub.docker.com/r/snowplow/snowplow-tracking-cli
 
@@ -128,7 +129,7 @@ limitations under the License.
 [gh-actions]: https://github.com/snowplow/snowplow-tracking-cli/actions
 [gh-actions-image]: https://github.com/snowplow/snowplow-tracking-cli/workflows/Build/badge.svg?branch=master
 
-[release-image]: http://img.shields.io/badge/release-0.5.0-6ad7e5.svg?style=flat
+[release-image]: http://img.shields.io/badge/release-0.6.0-6ad7e5.svg?style=flat
 [releases]: https://github.com/snowplow/snowplow-tracking-cli/releases
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
@@ -143,6 +144,7 @@ limitations under the License.
 [golang-tracker]: https://github.com/snowplow/snowplow-golang-tracker
 [sd-json]: http://snowplowanalytics.com/blog/2014/05/15/introducing-self-describing-jsons/
 
-[linux-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.5.0/snowplow_tracking_cli_0.5.0_linux_amd64.zip
-[windows-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.5.0/snowplow_tracking_cli_0.5.0_windows_amd64.zip
-[darwin-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.5.0/snowplow_tracking_cli_0.5.0_darwin_amd64.zip
+[linux-amd64-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.6.0/snowplow_tracking_cli_0.6.0_linux_amd64.zip
+[windows-amd64-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.6.0/snowplow_tracking_cli_0.6.0_windows_amd64.zip
+[darwin-amd64-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.6.0/snowplow_tracking_cli_0.6.0_darwin_amd64.zip
+[darwin-arm64-binary]: https://github.com/snowplow/snowplow-tracking-cli/releases/download/0.6.0/snowplow_tracking_cli_0.6.0_darwin_arm64.zip
