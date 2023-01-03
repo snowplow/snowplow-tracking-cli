@@ -1,3 +1,8 @@
+Version 0.7.0 (2023-01-03)
+--------------------------
+Upgrade to snowplow-tracker v3 (#43)
+Upgrade Golang to v1.19 (#44)
+
 Version 0.6.0 (2023-01-02)
 --------------------------
 Support Apple M1 / darwin arm64 (#38)
