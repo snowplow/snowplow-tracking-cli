@@ -1,6 +1,6 @@
 module github.com/snowplow/snowplow-tracking-cli
 
-go 1.18
+go 1.19
 
 require (
 	github.com/jarcoal/httpmock v1.2.0
@@ -18,6 +18,5 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
