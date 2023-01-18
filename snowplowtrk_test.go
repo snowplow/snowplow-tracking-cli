@@ -96,11 +96,12 @@ func TestInitTracker(t *testing.T) {
 	assert := assert.New(t)
 	trackerChan := make(chan int, 1)
 
-	tracker := initTracker("com.acme", "myapp", "POST", "https", "", trackerChan, nil)
+	tracker := initTracker("com.acme", "myapp", "mynamespace", "POST", "https", "", trackerChan, nil)
 	assert.NotNil(tracker)
 	assert.NotNil(tracker.Emitter)
 	assert.NotNil(tracker.Subject)
 	assert.Equal("myapp", tracker.AppId)
+	assert.Equal("mynamespace", tracker.Namespace)
 }
 
 func TestTrackSelfDescribingEventGood(t *testing.T) {
@@ -125,7 +126,7 @@ func TestTrackSelfDescribingEventGood(t *testing.T) {
 
 	// Setup Tracker
 	trackerChan := make(chan int, 1)
-	tracker := initTracker("com.acme", "myapp", "GET", "http", "", trackerChan, httpClient)
+	tracker := initTracker("com.acme", "myapp", "mynamespace", "GET", "http", "", trackerChan, httpClient)
 	assert.NotNil(tracker)
 
 	// Make SDJ
@@ -164,7 +165,7 @@ func TestTrackSelfDescribingEventBad(t *testing.T) {
 
 	// Setup Tracker
 	trackerChan := make(chan int, 1)
-	tracker := initTracker("com.acme", "myapp", "POST", "http", "", trackerChan, httpClient)
+	tracker := initTracker("com.acme", "myapp", "mynamespace", "POST", "http", "", trackerChan, httpClient)
 	assert.NotNil(tracker)
 
 	// Make SDJ
